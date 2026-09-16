@@ -59,3 +59,105 @@ wine WowLauncher.exe 2>&1 | tee ~/wine_launcher_debug.txt
 ```
 
 Reproducir el crash (login) y despues pegar el contenido de `~/wine_launcher_debug.txt` completo.
+
+
+---------------------------------------------------------------------------------------------------
+output
+gonzalo@fedora:~$ find ~ -iname "crash.log" 2>/dev/null -exec echo "=== {} ===" \; -exec cat {} \;
+=== /home/gonzalo/Games/launcher/drive_c/users/steamuser/AppData/Local/WowLauncher/crash.log ===
+==== 2026-09-16T19:30:16.5854824-03:00 (AppDomain.UnhandledException, terminating=True) ====
+System.ArgumentException: The path is empty. (Parameter 'path')
+   at System.IO.Path.GetFullPath(String path)
+   at Launcher.Core.Util.SafePath.Combine(String rootDirectory, String untrustedRelativePath) in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.Core\Util\SafePath.cs:line 19
+   at Launcher.Core.Services.OptionalPatchService.<>c__DisplayClass11_0.<VerifyInstalledAsync>b__0() in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.Core\Services\OptionalPatchService.cs:line 125
+   at System.Threading.Tasks.Task`1.InnerInvoke()
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Launcher.App.ViewModels.MainWindowViewModel.VerifyInstalledPatchesAsync() in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.App\ViewModels\MainWindowViewModel.cs:line 986
+   at Launcher.App.ViewModels.MainWindowViewModel.RefreshPlayabilityAsync(CancellationToken cancellationToken) in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.App\ViewModels\MainWindowViewModel.cs:line 1828
+   at Launcher.App.ViewModels.MainWindowViewModel.ConfirmLoginAsync() in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.App\ViewModels\MainWindowViewModel.cs:line 283
+   at CommunityToolkit.Mvvm.Input.AsyncRelayCommand.AwaitAndThrowIfFailed(Task executionTask) in /_/src/CommunityToolkit.Mvvm/Input/AsyncRelayCommand.cs:line 351
+   at System.Threading.Tasks.Task.<>c.<ThrowAsync>b__124_0(Object state)
+   at Avalonia.Threading.SendOrPostCallbackDispatcherOperation.InvokeCore()
+   at Avalonia.Threading.CulturePreservingExecutionContext.CallbackWrapper(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at Avalonia.Threading.DispatcherOperation.Execute()
+   at Avalonia.Threading.Dispatcher.ExecuteJobsCore(Boolean fromExplicitBackgroundProcessingCallback)
+   at Avalonia.Win32.Win32Platform.WndProc(IntPtr hWnd, UInt32 msg, IntPtr wParam, IntPtr lParam)
+   at Avalonia.Win32.Interop.UnmanagedMethods.DispatchMessage(MSG& lpmsg)
+   at Avalonia.Win32.Win32DispatcherImpl.RunLoop(CancellationToken cancellationToken)
+   at Avalonia.Threading.DispatcherFrame.Run(IControlledDispatcherImpl impl)
+   at Avalonia.Threading.Dispatcher.PushFrame(DispatcherFrame frame)
+   at Avalonia.Threading.Dispatcher.MainLoop(CancellationToken cancellationToken)
+   at Avalonia.Controls.ApplicationLifetimes.ClassicDesktopStyleApplicationLifetime.StartCore(String[] args)
+   at Launcher.App.Program.Main(String[] args) in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.App\Program.cs:line 26
+
+=== /home/gonzalo/.wine/drive_c/users/gonzalo/AppData/Local/WowLauncher/crash.log ===
+==== 2026-09-16T19:16:50.2162477-03:00 (AppDomain.UnhandledException, terminating=True) ====
+System.ArgumentException: The path is empty. (Parameter 'path')
+   at System.IO.Path.GetFullPath(String path)
+   at Launcher.Core.Util.SafePath.Combine(String rootDirectory, String untrustedRelativePath) in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.Core\Util\SafePath.cs:line 19
+   at Launcher.Core.Services.OptionalPatchService.<>c__DisplayClass11_0.<VerifyInstalledAsync>b__0() in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.Core\Services\OptionalPatchService.cs:line 125
+   at System.Threading.Tasks.Task`1.InnerInvoke()
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Launcher.App.ViewModels.MainWindowViewModel.VerifyInstalledPatchesAsync() in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.App\ViewModels\MainWindowViewModel.cs:line 986
+   at Launcher.App.ViewModels.MainWindowViewModel.RefreshPlayabilityAsync(CancellationToken cancellationToken) in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.App\ViewModels\MainWindowViewModel.cs:line 1828
+   at Launcher.App.ViewModels.MainWindowViewModel.ConfirmLoginAsync() in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.App\ViewModels\MainWindowViewModel.cs:line 283
+   at CommunityToolkit.Mvvm.Input.AsyncRelayCommand.AwaitAndThrowIfFailed(Task executionTask) in /_/src/CommunityToolkit.Mvvm/Input/AsyncRelayCommand.cs:line 351
+   at System.Threading.Tasks.Task.<>c.<ThrowAsync>b__124_0(Object state)
+   at Avalonia.Threading.SendOrPostCallbackDispatcherOperation.InvokeCore()
+   at Avalonia.Threading.CulturePreservingExecutionContext.CallbackWrapper(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at Avalonia.Threading.DispatcherOperation.Execute()
+   at Avalonia.Threading.Dispatcher.ExecuteJobsCore(Boolean fromExplicitBackgroundProcessingCallback)
+   at Avalonia.Win32.Win32Platform.WndProc(IntPtr hWnd, UInt32 msg, IntPtr wParam, IntPtr lParam)
+   at Avalonia.Win32.Interop.UnmanagedMethods.DispatchMessage(MSG& lpmsg)
+   at Avalonia.Win32.Win32DispatcherImpl.RunLoop(CancellationToken cancellationToken)
+   at Avalonia.Threading.DispatcherFrame.Run(IControlledDispatcherImpl impl)
+   at Avalonia.Threading.Dispatcher.PushFrame(DispatcherFrame frame)
+   at Avalonia.Threading.Dispatcher.MainLoop(CancellationToken cancellationToken)
+   at Avalonia.Controls.ApplicationLifetimes.ClassicDesktopStyleApplicationLifetime.StartCore(String[] args)
+   at Launcher.App.Program.Main(String[] args) in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.App\Program.cs:line 26
+
+==== 2026-09-16T19:18:58.8190025-03:00 (AppDomain.UnhandledException, terminating=True) ====
+System.ArgumentException: The path is empty. (Parameter 'path')
+   at System.IO.Path.GetFullPath(String path)
+   at Launcher.Core.Util.SafePath.Combine(String rootDirectory, String untrustedRelativePath) in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.Core\Util\SafePath.cs:line 19
+   at Launcher.Core.Services.OptionalPatchService.<>c__DisplayClass11_0.<VerifyInstalledAsync>b__0() in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.Core\Services\OptionalPatchService.cs:line 125
+   at System.Threading.Tasks.Task`1.InnerInvoke()
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Launcher.App.ViewModels.MainWindowViewModel.VerifyInstalledPatchesAsync() in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.App\ViewModels\MainWindowViewModel.cs:line 986
+   at Launcher.App.ViewModels.MainWindowViewModel.RefreshPlayabilityAsync(CancellationToken cancellationToken) in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.App\ViewModels\MainWindowViewModel.cs:line 1828
+   at Launcher.App.ViewModels.MainWindowViewModel.ConfirmLoginAsync() in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.App\ViewModels\MainWindowViewModel.cs:line 283
+   at CommunityToolkit.Mvvm.Input.AsyncRelayCommand.AwaitAndThrowIfFailed(Task executionTask) in /_/src/CommunityToolkit.Mvvm/Input/AsyncRelayCommand.cs:line 351
+   at System.Threading.Tasks.Task.<>c.<ThrowAsync>b__124_0(Object state)
+   at Avalonia.Threading.SendOrPostCallbackDispatcherOperation.InvokeCore()
+   at Avalonia.Threading.CulturePreservingExecutionContext.CallbackWrapper(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at Avalonia.Threading.DispatcherOperation.Execute()
+   at Avalonia.Threading.Dispatcher.ExecuteJobsCore(Boolean fromExplicitBackgroundProcessingCallback)
+   at Avalonia.Win32.Win32Platform.WndProc(IntPtr hWnd, UInt32 msg, IntPtr wParam, IntPtr lParam)
+   at Avalonia.Win32.Interop.UnmanagedMethods.DispatchMessage(MSG& lpmsg)
+   at Avalonia.Win32.Win32DispatcherImpl.RunLoop(CancellationToken cancellationToken)
+   at Avalonia.Threading.DispatcherFrame.Run(IControlledDispatcherImpl impl)
+   at Avalonia.Threading.Dispatcher.PushFrame(DispatcherFrame frame)
+   at Avalonia.Threading.Dispatcher.MainLoop(CancellationToken cancellationToken)
+   at Avalonia.Controls.ApplicationLifetimes.ClassicDesktopStyleApplicationLifetime.StartCore(String[] args)
+   at Launcher.App.Program.Main(String[] args) in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.App\Program.cs:line 26
