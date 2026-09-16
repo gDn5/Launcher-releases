@@ -1,0 +1,87 @@
+This game has no executable set. The install process didn't finish properly.
+
+Traceback (most recent call last):
+
+  File "/usr/lib/python3.14/site-packages/lutris/exception_backstops.py", line 35, in wrapper
+    result = function(*args, **kwargs)
+
+  File "/usr/lib/python3.14/site-packages/lutris/game.py", line 687, in configure_game
+    gameplay_info = self.get_gameplay_info(launch_ui_delegate)
+
+  File "/usr/lib/python3.14/site-packages/lutris/game.py", line 626, in get_gameplay_info
+    gameplay_info = self.runner.play()  # type: ignore[attr-defined]
+
+  File "/usr/lib/python3.14/site-packages/lutris/runners/wine.py", line 1336, in play
+    raise MissingGameExecutableError(filename=game_exe)
+
+lutris.exceptions.MissingGameExecutableError: This game has no executable set. The install process didn't finish properly.
+
+Lutris log:
+[INFO:2026-09-16 19:23:40,162:application]: Starting Lutris 0.5.22
+[INFO:2026-09-16 19:23:40,173:__init__]: Running migration: mess_to_mame
+[INFO:2026-09-16 19:23:40,173:__init__]: Running migration: migrate_hidden_ids
+[INFO:2026-09-16 19:23:40,173:__init__]: Running migration: migrate_steam_appids
+[INFO:2026-09-16 19:23:40,174:__init__]: Running migration: retrieve_discord_appids
+[INFO:2026-09-16 19:23:40,174:retrieve_discord_appids]: Updating Games Discord APP ID's
+[INFO:2026-09-16 19:23:40,174:__init__]: Running migration: migrate_sortname
+[INFO:2026-09-16 19:23:40,174:migrate_sortname]: Adding blank sortname field to database
+[INFO:2026-09-16 19:23:40,175:__init__]: Running migration: migrate_hidden_category
+[INFO:2026-09-16 19:23:40,175:migrate_hidden_category]: Moving hidden games to the '.hidden' category
+[INFO:2026-09-16 19:23:40,175:__init__]: Running migration: migrate_ge_proton
+[INFO:2026-09-16 19:23:40,175:__init__]: Running migration: migrate_banners_back
+[INFO:2026-09-16 19:23:40,176:__init__]: Running migration: migrate_proton_to_wine_dir
+[INFO:2026-09-16 19:23:40,318:startup]: "card1" is Intel Arc A580 Graphics (8086:56a2 1849:6003 i915) Driver 26.1.8
+[ERROR:2026-09-16 19:23:40,318:startup]: i386 libGL.so.1 missing (needed by opengl)
+[ERROR:2026-09-16 19:23:40,319:startup]: i386 libgnutls.so.30 missing (needed by gnutls)
+[WARNING:2026-09-16 19:23:41,437:system]: Non existent path: /home/gonzalo/.local/share/lutris/runtime/umu-games
+[WARNING:2026-09-16 19:23:42,185:system]: Non existent path: /home/gonzalo/.local/share/lutris/runtime/umu
+[WARNING:2026-09-16 19:23:49,662:system]: Non existent path: /home/gonzalo/.local/share/lutris/runtime/winetricks
+[WARNING:2026-09-16 19:23:51,638:system]: Non existent path: /home/gonzalo/.local/share/lutris/runtime/battleye_runtime
+[WARNING:2026-09-16 19:23:51,995:system]: Non existent path: /home/gonzalo/.local/share/lutris/runtime/eac_runtime
+[WARNING:2026-09-16 19:23:56,114:system]: Non existent path: /home/gonzalo/.local/share/lutris/runtime/innoextract-1.9-linux
+[WARNING:2026-09-16 19:23:56,629:system]: Non existent path: /home/gonzalo/.local/share/lutris/runtime/p7zip
+[WARNING:2026-09-16 19:23:56,994:system]: Non existent path: /home/gonzalo/.local/share/lutris/runtime/gamecontrollerdb
+[WARNING:2026-09-16 19:23:57,411:system]: Non existent path: /home/gonzalo/.local/share/lutris/runtime/network-tools
+[WARNING:2026-09-16 19:24:01,254:system]: Non existent path: /home/gonzalo/.local/share/lutris/runtime/Ubuntu-18.04-i686
+[WARNING:2026-09-16 19:24:04,971:system]: Non existent path: /home/gonzalo/.local/share/lutris/runtime/Ubuntu-18.04-x86_64
+[WARNING:2026-09-16 19:24:05,369:system]: Non existent path: /home/gonzalo/.local/share/lutris/runtime/dxvk-cache-tool
+[INFO:2026-09-16 19:24:30,319:interpreter]: Runner wine needs to be installed
+[INFO:2026-09-16 19:25:44,266:files_box]: All files available
+[INFO:2026-09-16 19:25:44,266:installerwindow]: All files are available, continuing install
+[INFO:2026-09-16 19:25:44,267:installerwindow]: Launching installer commands
+[INFO:2026-09-16 19:25:44,287:wine]: Creating a win64 prefix in /home/gonzalo/Games/launcher
+[INFO:2026-09-16 19:25:44,287:wine]: Winepath: /home/gonzalo/.local/share/lutris/runtime/umu/umu-run
+[WARNING:2026-09-16 19:26:14,793:wine]: Wine prefix creation is taking longer than expected...
+[INFO:2026-09-16 19:27:33,806:wine]: win64 Prefix created in /home/gonzalo/Games/launcher
+[ERROR:2026-09-16 19:27:33,885:wine]: The game doesn't have an executable
+[ERROR:2026-09-16 19:27:59,031:game_finder]: Couldn't find a Windows executable in /home/gonzalo/Games/launcher
+[WARNING:2026-09-16 19:27:59,056:game]: No path found in LutrisConfig(level=game, game_config_id=launcher-setup-1789597679, runner=wine)
+[WARNING:2026-09-16 19:27:59,056:path_cache]: No path for Launcher (wine)
+[ERROR:2026-09-16 19:28:03,751:wine]: The game doesn't have an executable
+[ERROR:2026-09-16 19:28:03,754:exception_backstops]: Launcher (wine) has encountered an error: This game has no executable set. The install process didn't finish properly.
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/site-packages/lutris/exception_backstops.py", line 35, in wrapper
+    result = function(*args, **kwargs)
+  File "/usr/lib/python3.14/site-packages/lutris/game.py", line 687, in configure_game
+    gameplay_info = self.get_gameplay_info(launch_ui_delegate)
+  File "/usr/lib/python3.14/site-packages/lutris/game.py", line 626, in get_gameplay_info
+    gameplay_info = self.runner.play()  # type: ignore[attr-defined]
+  File "/usr/lib/python3.14/site-packages/lutris/runners/wine.py", line 1336, in play
+    raise MissingGameExecutableError(filename=game_exe)
+lutris.exceptions.MissingGameExecutableError: This game has no executable set. The install process didn't finish properly.
+[WARNING:2026-09-16 19:28:03,755:game]: The game has run for a very short time, did it crash?
+[WARNING:2026-09-16 19:28:03,776:game]: No path found in LutrisConfig(level=game, game_config_id=launcher-setup-1789597679, runner=wine)
+[WARNING:2026-09-16 19:28:03,776:path_cache]: No path for Launcher (wine)
+[ERROR:2026-09-16 19:28:11,665:wine]: The game doesn't have an executable
+[ERROR:2026-09-16 19:28:11,668:exception_backstops]: Launcher (wine) has encountered an error: This game has no executable set. The install process didn't finish properly.
+Traceback (most recent call last):
+  File "/usr/lib/python3.14/site-packages/lutris/exception_backstops.py", line 35, in wrapper
+    result = function(*args, **kwargs)
+  File "/usr/lib/python3.14/site-packages/lutris/game.py", line 687, in configure_game
+    gameplay_info = self.get_gameplay_info(launch_ui_delegate)
+  File "/usr/lib/python3.14/site-packages/lutris/game.py", line 626, in get_gameplay_info
+    gameplay_info = self.runner.play()  # type: ignore[attr-defined]
+  File "/usr/lib/python3.14/site-packages/lutris/runners/wine.py", line 1336, in play
+    raise MissingGameExecutableError(filename=game_exe)
+lutris.exceptions.MissingGameExecutableError: This game has no executable set. The install process didn't finish properly.
+[WARNING:2026-09-16 19:28:11,668:game]: The game has run for a very short time, did it crash?
