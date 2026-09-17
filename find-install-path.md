@@ -34,3 +34,14 @@ find ~ -iname "Wow.exe" -o -iname "Wow-HD.exe" 2>/dev/null
 
 Una vez ubicada, en el launcher (nueva instalacion, sin descargar nada) elegis esa misma carpeta como
 carpeta de instalacion - el launcher va a detectar que el cliente ya esta ahi sin volver a descargar.
+
+
+
+los comandos me devolvieron esto gonzalo@fedora:~/Downloads$ find ~ -ipath "*AppData/Roaming/WowLauncher/settings.json" 2>/dev/null -exec grep -o "\"InstallPath\":[^,]*" {} \;
+"InstallPath": "C:\\"
+"InstallPath": "C:\\"
+"InstallPath": "C:\\openxr"
+gonzalo@fedora:~/Downloads$ find ~ -iname "Wow.exe" -o -iname "Wow-HD.exe" 2>/dev/null
+/home/gonzalo/.local/share/Trash/files/test.0/drive_c/Wow.exe
+gonzalo@fedora:~/Downloads$ 
+pero en el selector de carpetas si apreto c: abre y nada y no veo ninguna carpeta y tampoco reconoce la instalacion
