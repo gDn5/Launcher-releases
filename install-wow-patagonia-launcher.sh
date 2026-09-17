@@ -37,10 +37,14 @@ runner: wine
 
 script:
   game:
-    exe: $GAMEDIR/WowLauncher.exe
+    # NOT $GAMEDIR/WowLauncher.exe - the portable zip's own root only has "Update.exe" and a
+    # stub called "WoW Patagonia Launcher.exe" (named after the pack title, with spaces, which
+    # otherwise just relaunches whatever's in current/ anyway). The real app binary is directly
+    # inside current/ - confirmed by listing the actual zip's entries, not assumed.
+    exe: $GAMEDIR/current/WowLauncher.exe
     prefix: $GAMEDIR
     arch: win64
-    working_dir: $GAMEDIR
+    working_dir: $GAMEDIR/current
 
   files:
   - launcherzip: https://github.com/gDn5/Launcher-releases/releases/latest/download/WowPatagoniaLauncher-win-Portable.zip
