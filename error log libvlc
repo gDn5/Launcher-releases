@@ -1,0 +1,23 @@
+Unhandled exception. System.DllNotFoundException: Unable to load shared library 'libvlc' or one of its dependencies. In order to help diagnose loading problems, consider using a tool like strace. If you're using glibc, consider setting the LD_DEBUG environment variable: 
+/home/gonzalo/WowPatagoniaLauncher/libvlc.so: cannot open shared object file: No such file or directory
+/home/gonzalo/WowPatagoniaLauncher/liblibvlc.so: cannot open shared object file: No such file or directory
+/home/gonzalo/WowPatagoniaLauncher/libvlc: cannot open shared object file: No such file or directory
+/home/gonzalo/WowPatagoniaLauncher/liblibvlc: cannot open shared object file: No such file or directory
+
+   at LibVLCSharp.Shared.Core.EnsureVersionsMatch()
+   at LibVLCSharp.Shared.Core.Initialize(String libvlcDirectoryPath)
+   at Launcher.App.Program.Main(String[] args) in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.App\Program.cs:line 29
+Aborted                  (core dumped) ./WowLauncher
+
+solucion 2. Contexto Técnico
+Entorno: Fedora 44 (x86_64), .NET Core / C# app (LibVLCSharp).
+
+Problema: El framework intentaba inicializar VLC llamando a LibVLCSharp.Shared.Core.Initialize(), pero buscaba libvlc.so estrictamente dentro de la ruta local del launcher (/home/gonzalo/WowPatagoniaLauncher/). Aunque el paquete vlc-libs ya estaba instalado en el sistema operativo mediante DNF, las librerías globales no estaban mapeadas en el directorio de trabajo del binario.
+
+3. Solución Aplicada
+Se mapearon las librerías nativas del sistema hacia la ruta local del launcher mediante enlaces simbólicos:
+
+Bash
+cd /home/gonzalo/WowPatagoniaLauncher/
+ln -s /usr/lib64/libvlc.so.5 libvlc.so
+ln -s /usr/lib64/libvlccore.so.9 libvlccore.so
