@@ -29,8 +29,146 @@ find /usr/lib64/vlc/plugins -maxdepth 1 -name "*.so" | wc -l
 ```bash
 cat ~/.local/share/WowLauncher/crash.log
 ```
+cat ~/.local/share/WowLauncher/crash.log
+==== 2026-09-17T22:56:18.7547411-03:00 (AppDomain.UnhandledException, terminating=True) ====
+System.DllNotFoundException: Unable to load shared library 'libvlc' or one of its dependencies. In order to help diagnose loading problems, consider using a tool like strace. If you're using glibc, consider setting the LD_DEBUG environment variable: 
+/home/gonzalo/WowPatagoniaLauncher/libvlc.so: cannot open shared object file: No such file or directory
+/home/gonzalo/WowPatagoniaLauncher/liblibvlc.so: cannot open shared object file: No such file or directory
+/home/gonzalo/WowPatagoniaLauncher/libvlc: cannot open shared object file: No such file or directory
+/home/gonzalo/WowPatagoniaLauncher/liblibvlc: cannot open shared object file: No such file or directory
+
+   at LibVLCSharp.Shared.Core.EnsureVersionsMatch()
+   at LibVLCSharp.Shared.Core.Initialize(String libvlcDirectoryPath)
+   at Launcher.App.Program.Main(String[] args) in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.App\Program.cs:line 29
+
+==== 2026-09-17T22:58:21.6643373-03:00 (TaskScheduler.UnobservedTaskException, terminating=False) ====
+System.AggregateException: A Task's exception(s) were not observed either by Waiting on the Task or accessing its Exception property. As a result, the unobserved exception was rethrown by the finalizer thread. (Failed to perform instanciation on the native side. Make sure you installed the correct VideoLAN.LibVLC.[YourPlatform] package in your platform specific project)
+ ---> LibVLCSharp.Shared.VLCException: Failed to perform instanciation on the native side. Make sure you installed the correct VideoLAN.LibVLC.[YourPlatform] package in your platform specific project
+   at LibVLCSharp.Shared.Internal.OnNativeInstanciationError()
+   at LibVLCSharp.Shared.Internal..ctor(Func`1 create, Action`1 release)
+   at LibVLCSharp.Shared.LibVLC..ctor(String[] options)
+   at Launcher.App.Views.MainWindow.<>c__DisplayClass19_0.<OnWindowOpened>b__0() in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.App\Views\MainWindow.axaml.cs:line 146
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+   --- End of inner exception stack trace ---
+
+==== 2026-09-17T23:00:12.7091182-03:00 (TaskScheduler.UnobservedTaskException, terminating=False) ====
+System.AggregateException: A Task's exception(s) were not observed either by Waiting on the Task or accessing its Exception property. As a result, the unobserved exception was rethrown by the finalizer thread. (Failed to perform instanciation on the native side. Make sure you installed the correct VideoLAN.LibVLC.[YourPlatform] package in your platform specific project)
+ ---> LibVLCSharp.Shared.VLCException: Failed to perform instanciation on the native side. Make sure you installed the correct VideoLAN.LibVLC.[YourPlatform] package in your platform specific project
+   at LibVLCSharp.Shared.Internal.OnNativeInstanciationError()
+   at LibVLCSharp.Shared.Internal..ctor(Func`1 create, Action`1 release)
+   at LibVLCSharp.Shared.LibVLC..ctor(String[] options)
+   at Launcher.App.Views.MainWindow.<>c__DisplayClass19_0.<OnWindowOpened>b__0() in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.App\Views\MainWindow.axaml.cs:line 146
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+   --- End of inner exception stack trace ---
+
+==== 2026-09-18T00:38:08.3689279-03:00 (TaskScheduler.UnobservedTaskException, terminating=False) ====
+System.AggregateException: A Task's exception(s) were not observed either by Waiting on the Task or accessing its Exception property. As a result, the unobserved exception was rethrown by the finalizer thread. (Failed to perform instanciation on the native side. Make sure you installed the correct VideoLAN.LibVLC.[YourPlatform] package in your platform specific project)
+ ---> LibVLCSharp.Shared.VLCException: Failed to perform instanciation on the native side. Make sure you installed the correct VideoLAN.LibVLC.[YourPlatform] package in your platform specific project
+   at LibVLCSharp.Shared.Internal.OnNativeInstanciationError()
+   at LibVLCSharp.Shared.Internal..ctor(Func`1 create, Action`1 release)
+   at LibVLCSharp.Shared.LibVLC..ctor(String[] options)
+   at Launcher.App.Views.MainWindow.<>c__DisplayClass19_0.<OnWindowOpened>b__0() in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.App\Views\MainWindow.axaml.cs:line 146
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+   --- End of inner exception stack trace ---
+
+==== 2026-09-18T10:10:42.8404190-03:00 (TaskScheduler.UnobservedTaskException, terminating=False) ====
+System.AggregateException: A Task's exception(s) were not observed either by Waiting on the Task or accessing its Exception property. As a result, the unobserved exception was rethrown by the finalizer thread. (Failed to perform instanciation on the native side. Make sure you installed the correct VideoLAN.LibVLC.[YourPlatform] package in your platform specific project)
+ ---> LibVLCSharp.Shared.VLCException: Failed to perform instanciation on the native side. Make sure you installed the correct VideoLAN.LibVLC.[YourPlatform] package in your platform specific project
+   at LibVLCSharp.Shared.Internal.OnNativeInstanciationError()
+   at LibVLCSharp.Shared.Internal..ctor(Func`1 create, Action`1 release)
+   at LibVLCSharp.Shared.LibVLC..ctor(String[] options)
+   at Launcher.App.Views.MainWindow.<>c__DisplayClass19_0.<OnWindowOpened>b__0() in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.App\Views\MainWindow.axaml.cs:line 146
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+   --- End of inner exception stack trace ---
+
+==== 2026-09-18T10:20:18.6807695-03:00 (TaskScheduler.UnobservedTaskException, terminating=False) ====
+System.AggregateException: A Task's exception(s) were not observed either by Waiting on the Task or accessing its Exception property. As a result, the unobserved exception was rethrown by the finalizer thread. (Failed to perform instanciation on the native side. Make sure you installed the correct VideoLAN.LibVLC.[YourPlatform] package in your platform specific project)
+ ---> LibVLCSharp.Shared.VLCException: Failed to perform instanciation on the native side. Make sure you installed the correct VideoLAN.LibVLC.[YourPlatform] package in your platform specific project
+   at LibVLCSharp.Shared.Internal.OnNativeInstanciationError()
+   at LibVLCSharp.Shared.Internal..ctor(Func`1 create, Action`1 release)
+   at LibVLCSharp.Shared.LibVLC..ctor(String[] options)
+   at Launcher.App.Views.MainWindow.<>c__DisplayClass19_0.<OnWindowOpened>b__0() in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.App\Views\MainWindow.axaml.cs:line 146
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+   --- End of inner exception stack trace ---
+
+==== 2026-09-18T10:43:28.2836913-03:00 (TaskScheduler.UnobservedTaskException, terminating=False) ====
+System.AggregateException: A Task's exception(s) were not observed either by Waiting on the Task or accessing its Exception property. As a result, the unobserved exception was rethrown by the finalizer thread. (Failed to perform instanciation on the native side. Make sure you installed the correct VideoLAN.LibVLC.[YourPlatform] package in your platform specific project)
+ ---> LibVLCSharp.Shared.VLCException: Failed to perform instanciation on the native side. Make sure you installed the correct VideoLAN.LibVLC.[YourPlatform] package in your platform specific project
+   at LibVLCSharp.Shared.Internal.OnNativeInstanciationError()
+   at LibVLCSharp.Shared.Internal..ctor(Func`1 create, Action`1 release)
+   at LibVLCSharp.Shared.LibVLC..ctor(String[] options)
+   at Launcher.App.Views.MainWindow.<>c__DisplayClass19_0.<OnWindowOpened>b__0() in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.App\Views\MainWindow.axaml.cs:line 146
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+   --- End of inner exception stack trace ---
+
+==== 2026-09-18T10:44:54.6245494-03:00 (TaskScheduler.UnobservedTaskException, terminating=False) ====
+System.AggregateException: A Task's exception(s) were not observed either by Waiting on the Task or accessing its Exception property. As a result, the unobserved exception was rethrown by the finalizer thread. (Failed to perform instanciation on the native side. Make sure you installed the correct VideoLAN.LibVLC.[YourPlatform] package in your platform specific project)
+ ---> LibVLCSharp.Shared.VLCException: Failed to perform instanciation on the native side. Make sure you installed the correct VideoLAN.LibVLC.[YourPlatform] package in your platform specific project
+   at LibVLCSharp.Shared.Internal.OnNativeInstanciationError()
+   at LibVLCSharp.Shared.Internal..ctor(Func`1 create, Action`1 release)
+   at LibVLCSharp.Shared.LibVLC..ctor(String[] options)
+   at Launcher.App.Views.MainWindow.<>c__DisplayClass19_0.<OnWindowOpened>b__0() in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.App\Views\MainWindow.axaml.cs:line 146
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+   --- End of inner exception stack trace ---
+
+==== 2026-09-18T11:03:26.9838129-03:00 (Background video/music LibVLC load, terminating=False) ====
+LibVLCSharp.Shared.VLCException: Failed to perform instanciation on the native side. Make sure you installed the correct VideoLAN.LibVLC.[YourPlatform] package in your platform specific project
+   at LibVLCSharp.Shared.Internal.OnNativeInstanciationError()
+   at LibVLCSharp.Shared.Internal..ctor(Func`1 create, Action`1 release)
+   at LibVLCSharp.Shared.LibVLC..ctor(String[] options)
+   at Launcher.App.Views.MainWindow.<>c__DisplayClass19_0.<OnWindowOpened>b__0() in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.App\Views\MainWindow.axaml.cs:line 150
+
+==== 2026-09-18T11:05:27.5574151-03:00 (Background video/music LibVLC load, terminating=False) ====
+LibVLCSharp.Shared.VLCException: Failed to perform instanciation on the native side. Make sure you installed the correct VideoLAN.LibVLC.[YourPlatform] package in your platform specific project
+   at LibVLCSharp.Shared.Internal.OnNativeInstanciationError()
+   at LibVLCSharp.Shared.Internal..ctor(Func`1 create, Action`1 release)
+   at LibVLCSharp.Shared.LibVLC..ctor(String[] options)
+   at Launcher.App.Views.MainWindow.<>c__DisplayClass19_0.<OnWindowOpened>b__0() in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.App\Views\MainWindow.axaml.cs:line 150
+
+==== 2026-09-18T11:05:44.8348985-03:00 (Background video/music LibVLC load, terminating=False) ====
+LibVLCSharp.Shared.VLCException: Failed to perform instanciation on the native side. Make sure you installed the correct VideoLAN.LibVLC.[YourPlatform] package in your platform specific project
+   at LibVLCSharp.Shared.Internal.OnNativeInstanciationError()
+   at LibVLCSharp.Shared.Internal..ctor(Func`1 create, Action`1 release)
+   at LibVLCSharp.Shared.LibVLC..ctor(String[] options)
+   at Launcher.App.Views.MainWindow.<>c__DisplayClass19_0.<OnWindowOpened>b__0() in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.App\Views\MainWindow.axaml.cs:line 150
+
+==== 2026-09-18T11:05:44.8356011-03:00 (Background video/music LibVLC load, terminating=False) ====
+LibVLCSharp.Shared.VLCException: Failed to perform instanciation on the native side. Make sure you installed the correct VideoLAN.LibVLC.[YourPlatform] package in your platform specific project
+   at LibVLCSharp.Shared.Internal.OnNativeInstanciationError()
+   at LibVLCSharp.Shared.Internal..ctor(Func`1 create, Action`1 release)
+   at LibVLCSharp.Shared.LibVLC..ctor(String[] options)
+   at Launcher.App.Views.MainWindow.<>c__DisplayClass19_0.<OnWindowOpened>b__0() in C:\Users\Gonzalo\Documents\GitHub\Launcher\src\Launcher.App\Views\MainWindow.axaml.cs:line 150
+
+gonzalo@fedora:~/WowPatagoniaLauncher$ 
+
 
 Pegar acá (o en un archivo nuevo en este repo) el resultado de los pasos 2 y/o 3.
+rpm -q vlc-plugins-base
+find /usr/lib64/vlc/plugins -maxdepth 1 -name "*.so" | wc -l
+vlc-plugins-base-3.0.23-10.fc44.x86_64
+0
+
 
 ---
 
