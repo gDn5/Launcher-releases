@@ -1,0 +1,17 @@
+al correr por terminal el launcher 
+gonzalo@fedora:~/WowPatagoniaLauncher$ ./WowLauncher
+002c:fixme:winediag:loader_init wine-staging 11.0 is a testing version containing experimental patches.
+002c:fixme:winediag:loader_init Please mention your exact version when filing bug reports on winehq.org.
+0024:fixme:winediag:loader_init wine-staging 11.0 is a testing version containing experimental patches.
+0024:fixme:winediag:loader_init Please mention your exact version when filing bug reports on winehq.org.
+0128:fixme:ntdll:NtQuerySystemInformation info_class SYSTEM_PERFORMANCE_INFORMATION
+0130:fixme:d3d:state_linepattern_w Setting line patterns is not supported in OpenGL core contexts.
+0178:err:wininet:open_http_connection create_netconn failed: 12029
+0168:err:wininet:open_http_connection create_netconn failed: 12029
+0164:err:wininet:open_http_connection create_netconn failed: 12029
+01a4:fixme:winediag:loader_init wine-staging 11.0 is a testing version containing experimental patches.
+01a4:fixme:winediag:loader_init Please mention your exact version when filing bug reports on winehq.org.
+gonzalo@fedora:~/WowPatagoniaLauncher$ 01b4:fixme:winediag:loader_init wine-staging 11.0 is a testing version containing experimental patches.
+01b4:fixme:winediag:loader_init Please mention your exact version when filing bug reports on winehq.org.
+./WowLauncher
+gonzalo@fedora:~/WowPatagoniaLauncher$ 
