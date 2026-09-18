@@ -1,5 +1,41 @@
 # Diagnóstico: video/música no funcionan en Linux
 
+## Próximos pasos (ronda 2 - post fix de vlc-plugins-base + ydotool)
+
+El log de abajo (ronda 1) confirmó que `libvlc.so` carga bien pero `libvlc_new()` falla en el
+lado nativo - consistente con que falten los plugins reales de VLC (`vlc-plugins-base`), no solo
+la librería core (`vlc-libs`). También se confirmó que el diálogo de "remote desktop" es GNOME/
+Wayland interceptando las teclas simuladas por `xdotool`.
+
+1. Correr el instalador actualizado (ahora instala `vlc-plugins-base` y configura `ydotool`):
+
+```bash
+curl -sL https://raw.githubusercontent.com/gDn5/Launcher-releases/main/install-native-linux.sh | bash
+```
+
+Si es la primera vez, puede pedir **cerrar sesión y volver a entrar** (no alcanza con reabrir la
+terminal) para que el login automático funcione - lo va a avisar explícitamente si hace falta.
+
+2. Confirmar que los plugins de VLC quedaron instalados de verdad:
+
+```bash
+rpm -q vlc-plugins-base
+find /usr/lib64/vlc/plugins -maxdepth 1 -name "*.so" | wc -l
+```
+
+3. Abrir el launcher de nuevo, probar video/música y Jugar, y si algo sigue fallando volver a
+   revisar el log:
+
+```bash
+cat ~/.local/share/WowLauncher/crash.log
+```
+
+Pegar acá (o en un archivo nuevo en este repo) el resultado de los pasos 2 y/o 3.
+
+---
+
+## Ronda 1 (ya resuelta / usada para diagnosticar lo de arriba)
+
 1. Revisar si ya quedó algo logueado (no hace falta reinstalar nada para este paso):
 
 ```bash
