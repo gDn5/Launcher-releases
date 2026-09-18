@@ -14,15 +14,22 @@ INSTALL_DIR="$HOME/WowPatagoniaLauncher"
 echo "== Instalador del build nativo de Linux del WoW Patagonia Launcher =="
 
 install_deps() {
-    echo "Instalando dependencias (vlc-libs, xdotool, wine)..."
+    echo "Instalando dependencias (vlc + plugins, xdotool, wine)..."
     if command -v dnf >/dev/null 2>&1; then
-        sudo dnf install -y vlc-libs xdotool wine
+        # vlc-libs por si solo NO alcanza: es unicamente libvlc.so/libvlccore.so, sin ningun
+        # plugin de decodificacion (confirmado contra el .spec real de Fedora - vlc-plugins-base
+        # es un subpaquete separado que vlc-libs no arrastra como dependencia). Sin el, libvlc
+        # carga bien pero no hay nada que decodifique audio/video - silencio total, sin error.
+        sudo dnf install -y vlc-libs vlc-plugins-base xdotool wine
     elif command -v apt >/dev/null 2>&1; then
         sudo apt install -y vlc-plugin-base libvlc5 xdotool wine
     elif command -v pacman >/dev/null 2>&1; then
-        sudo pacman -S --needed --noconfirm libvlc xdotool wine
+        # A diferencia de Fedora/Debian, Arch no separa un paquete de "solo plugins" - libvlc por
+        # si solo (confirmado contra su propio depends: solo dbus/glibc/libgcc, sin plugins) no
+        # alcanza; hace falta el paquete "vlc" completo, que es el que trae los plugins reales.
+        sudo pacman -S --needed --noconfirm vlc xdotool wine
     else
-        echo "No reconozco tu gestor de paquetes. Instala manualmente: libvlc/vlc, xdotool y wine."
+        echo "No reconozco tu gestor de paquetes. Instala manualmente: vlc (paquete completo, no solo la libreria), xdotool y wine."
         exit 1
     fi
 }
@@ -32,6 +39,10 @@ command -v xdotool >/dev/null 2>&1 || missing+=("xdotool")
 command -v wine >/dev/null 2>&1 || missing+=("wine")
 # No hay un binario "vlc-libs" en si - se chequea buscando la libreria compartida real.
 ldconfig -p 2>/dev/null | grep -q "libvlc\.so" || missing+=("vlc-libs")
+# La libreria puede estar presente sin sus plugins (ver comentario en install_deps) - se busca
+# la carpeta de plugins de VLC en cualquiera de las rutas de libreria habituales, sin asumir una
+# distro en particular.
+find /usr/lib* -maxdepth 3 -type d -path "*/vlc/plugins" 2>/dev/null | grep -q . || missing+=("vlc-plugins")
 
 if [ ${#missing[@]} -gt 0 ]; then
     echo "Faltan: ${missing[*]}"
