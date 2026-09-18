@@ -16,11 +16,13 @@ Launcher oficial para jugar en **WoW Patagonia**: descarga e instala el cliente,
 
 El launcher también corre **nativo en Linux** — no hace falta Lutris, Proton ni configurar nada a mano. Wine se usa únicamente por detrás para el cliente de WoW en sí (que es un ejecutable de Windows sin alternativa nativa); el launcher lo instala solo si no lo tenés.
 
-Instalación con un solo comando (te va a pedir tu contraseña para instalar dependencias que falten — `wine`, `xdotool`, `vlc-libs` — vía tu gestor de paquetes: dnf, apt o pacman):
+Instalación con un solo comando (te va a pedir tu contraseña para instalar dependencias que falten — `wine`, `xdotool`, `ydotool`, `vlc` — vía tu gestor de paquetes: dnf, apt o pacman):
 
 ```bash
 curl -sL https://raw.githubusercontent.com/gDn5/Launcher-releases/main/install-native-linux.sh | bash
 ```
+
+> **¿Primera vez instalando?** Puede que el script te avise que cerrés sesión y volvás a entrar antes de que el login automático funcione (es una sola vez, para que tu usuario reciba el permiso necesario). El resto del launcher funciona igual mientras tanto.
 
 Esto deja todo instalado en `~/WowPatagoniaLauncher`. Para abrir el launcher después:
 
