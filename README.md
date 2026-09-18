@@ -6,9 +6,29 @@ Launcher oficial para jugar en **WoW Patagonia**: descarga e instala el cliente,
 
 ## Descarga
 
+### Windows
+
 **[⬇ Descargar la última versión](https://github.com/gDn5/Launcher-releases/releases/latest)** — bajá `WowPatagoniaLauncher-win-Setup.exe` y ejecutalo. No hay asistentes ni pasos intermedios: se instala solo y abre el launcher apenas termina.
 
 > **¿Aparece un aviso de Windows ("Windows protegió tu PC")?** Es esperable: el launcher todavía no tiene firma digital (un trámite pago que no cambia la seguridad real de la app, solo evita ese aviso en instaladores nuevos). Hacé click en **"Más información"** y después en **"Ejecutar de todas formas"** para continuar.
+
+### Linux (beta)
+
+El launcher también corre **nativo en Linux** — no hace falta Lutris, Proton ni configurar nada a mano. Wine se usa únicamente por detrás para el cliente de WoW en sí (que es un ejecutable de Windows sin alternativa nativa); el launcher lo instala solo si no lo tenés.
+
+Instalación con un solo comando (te va a pedir tu contraseña para instalar dependencias que falten — `wine`, `xdotool`, `vlc-libs` — vía tu gestor de paquetes: dnf, apt o pacman):
+
+```bash
+curl -sL https://raw.githubusercontent.com/gDn5/Launcher-releases/main/install-native-linux.sh | bash
+```
+
+Esto deja todo instalado en `~/WowPatagoniaLauncher`. Para abrir el launcher después:
+
+```bash
+~/WowPatagoniaLauncher/WowLauncher
+```
+
+> Es un build en etapa temprana — si algo falla, contanos en el Discord con el mayor detalle posible (distro, y si podés, lo que aparece en la terminal al abrirlo).
 
 ## Qué hace
 
@@ -25,7 +45,7 @@ Launcher oficial para jugar en **WoW Patagonia**: descarga e instala el cliente,
 
 | | |
 |---|---|
-| Sistema operativo | Windows 10 u 11, 64 bits |
+| Sistema operativo | Windows 10 u 11 (64 bits), o Linux (64 bits, beta) |
 | Espacio en disco | ~20 GB libres (cliente base, con margen para parches opcionales) |
 | Conexión a internet | Necesaria para la descarga inicial y las actualizaciones |
 
