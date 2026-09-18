@@ -20,13 +20,21 @@ install_deps() {
         # plugin de decodificacion (confirmado contra el .spec real de Fedora - vlc-plugins-base
         # es un subpaquete separado que vlc-libs no arrastra como dependencia). Sin el, libvlc
         # carga bien pero no hay nada que decodifique audio/video - silencio total, sin error.
-        sudo dnf install -y vlc-libs vlc-plugins-base xdotool ydotool wine
+        # vlc-plugins-base tampoco alcanza del todo: el video de fondo es H.264 (mp4), y ese
+        # decoder especificamente vive en vlc-plugin-ffmpeg (otro subpaquete mas, separado de
+        # base por licenciamiento de patentes - confirmado: la musica sonaba con solo
+        # plugins-base instalado, pero el video seguia sin funcionar). vlc-plugins-all instala
+        # todos los subpaquetes de una vez y evita seguir adivinando cual falta.
+        sudo dnf install -y vlc-libs vlc-plugins-all xdotool ydotool wine
     elif command -v apt >/dev/null 2>&1; then
-        sudo apt install -y vlc-plugin-base libvlc5 xdotool ydotool wine
+        # Debian/Ubuntu no separan tan finamente como Fedora, pero por las dudas se suma el
+        # paquete "vlc" completo tambien, en vez de asumir que vlc-plugin-base alcanza.
+        sudo apt install -y vlc vlc-plugin-base libvlc5 xdotool ydotool wine
     elif command -v pacman >/dev/null 2>&1; then
         # A diferencia de Fedora/Debian, Arch no separa un paquete de "solo plugins" - libvlc por
         # si solo (confirmado contra su propio depends: solo dbus/glibc/libgcc, sin plugins) no
-        # alcanza; hace falta el paquete "vlc" completo, que es el que trae los plugins reales.
+        # alcanza; hace falta el paquete "vlc" completo, que es el que trae los plugins reales
+        # (incluido el decoder H.264, ya compilado adentro del mismo paquete en Arch).
         sudo pacman -S --needed --noconfirm vlc xdotool ydotool wine
     else
         echo "No reconozco tu gestor de paquetes. Instala manualmente: vlc (paquete completo, no solo la libreria), xdotool, ydotool y wine."
@@ -40,10 +48,13 @@ command -v ydotool >/dev/null 2>&1 || missing+=("ydotool")
 command -v wine >/dev/null 2>&1 || missing+=("wine")
 # No hay un binario "vlc-libs" en si - se chequea buscando la libreria compartida real.
 ldconfig -p 2>/dev/null | grep -q "libvlc\.so" || missing+=("vlc-libs")
-# La libreria puede estar presente sin sus plugins (ver comentario en install_deps) - se busca
-# la carpeta de plugins de VLC en cualquiera de las rutas de libreria habituales, sin asumir una
-# distro en particular.
-find /usr/lib* -maxdepth 3 -type d -path "*/vlc/plugins" 2>/dev/null | grep -q . || missing+=("vlc-plugins")
+# La libreria puede estar presente sin sus plugins, y con SOLO los plugins basicos sin el
+# decoder de video (ver comentario en install_deps - confirmado con un caso real: sonaba la
+# musica pero no habia video, con vlc-plugins-base instalado y vlc-plugins-all/vlc-plugin-ffmpeg
+# faltando). Se busca el plugin de avcodec especificamente (el que decodifica el H.264 del video
+# de fondo), no solo "algun" archivo en la carpeta de plugins - asi una instalacion parcial
+# vieja tambien se detecta como incompleta en vez de leerse como "ya esta todo instalado".
+find /usr/lib* -ipath "*/vlc/plugins/*avcodec*" 2>/dev/null | grep -q . || missing+=("vlc-plugins")
 
 if [ ${#missing[@]} -gt 0 ]; then
     echo "Faltan: ${missing[*]}"
