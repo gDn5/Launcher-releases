@@ -1,17 +1,37 @@
 #!/usr/bin/env bash
-# Instala las dependencias, baja y deja listo para correr el build NATIVO de Linux del launcher
-# (no usa Wine/Lutris para el launcher en si - Wine solo se invoca despues, adentro del propio
-# launcher, para lanzar el WoW).
+# Instala WoW Patagonia Launcher para Linux: las dependencias del sistema (vlc, xdotool, ydotool, wine),
+# el launcher en formato AppImage, y lo agrega al menu de aplicaciones. Wine solo se usa despues, adentro
+# del propio launcher, para lanzar el WoW.
+#
+# Uso:      curl -sL https://raw.githubusercontent.com/gDn5/Launcher-releases/main/install-native-linux.sh | bash
+# Quitar:   curl -sL https://raw.githubusercontent.com/gDn5/Launcher-releases/main/install-native-linux.sh | bash -s -- --uninstall
 set -euo pipefail
 
-# TODO: esto es un build de prueba con su propio tag fijo, no "latest" - una vez que el build
-# nativo de Linux se integre al pipeline de releases normal, esto deberia apuntar a
-# releases/latest/download/... como ya hace el launcher de Windows.
-RELEASE_TAG="linux-native-test-1"
-ASSET_URL="https://github.com/gDn5/Launcher-releases/releases/download/${RELEASE_TAG}/linux-native-test.tar.gz"
-INSTALL_DIR="$HOME/WowPatagoniaLauncher"
+REPO="gDn5/Launcher-releases"
+SCRIPT_URL="https://raw.githubusercontent.com/${REPO}/main/install-native-linux.sh"
+DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+INSTALL_DIR="$HOME/Applications"
+APPIMAGE_PATH="$INSTALL_DIR/WowPatagoniaLauncher.AppImage"
+LEGACY_DIR="$HOME/WowPatagoniaLauncher"
 
-echo "== Instalador del build nativo de Linux del WoW Patagonia Launcher =="
+# ---------------------------------------------------------------------------------------
+# Desinstalar: saca el launcher y su acceso directo. NO toca el juego, la configuracion ni el
+# prefijo de Wine (son datos del jugador), ni los paquetes/reglas de sistema que se instalaron.
+# ---------------------------------------------------------------------------------------
+if [ "${1:-}" = "--uninstall" ]; then
+    echo "Desinstalando el launcher..."
+    if [ -x "$APPIMAGE_PATH" ]; then
+        "$APPIMAGE_PATH" --remove-desktop-entry >/dev/null 2>&1 || true
+    fi
+    rm -f "$APPIMAGE_PATH" \
+        "$DATA_HOME/applications/wowpatagonia-launcher.desktop" \
+        "$DATA_HOME/icons/wowpatagonia-launcher.png"
+    echo "Listo. Quedaron sin tocar tus datos: $DATA_HOME/WowLauncher (prefijo de Wine, logs) y"
+    echo "${XDG_CONFIG_HOME:-$HOME/.config}/WowLauncher (configuracion). Borralos a mano si tambien queres eso."
+    exit 0
+fi
+
+echo "== Instalador del WoW Patagonia Launcher para Linux =="
 
 install_deps() {
     echo "Instalando dependencias (vlc + plugins, xdotool, ydotool, wine)..."
@@ -25,19 +45,24 @@ install_deps() {
         # base por licenciamiento de patentes - confirmado: la musica sonaba con solo
         # plugins-base instalado, pero el video seguia sin funcionar). vlc-plugins-all instala
         # todos los subpaquetes de una vez y evita seguir adivinando cual falta.
-        sudo dnf install -y vlc-libs vlc-plugins-all xdotool ydotool wine
+        # fuse-libs: el AppImage lo necesita para montarse (sin el no abre).
+        sudo dnf install -y vlc-libs vlc-plugins-all xdotool ydotool wine fuse-libs
     elif command -v apt >/dev/null 2>&1; then
         # Debian/Ubuntu no separan tan finamente como Fedora, pero por las dudas se suma el
         # paquete "vlc" completo tambien, en vez de asumir que vlc-plugin-base alcanza.
-        sudo apt install -y vlc vlc-plugin-base libvlc5 xdotool ydotool wine
+        # libfuse2: el AppImage lo necesita para montarse y Ubuntu 22.04+ ya no lo trae de fabrica
+        # (en 24.04 el paquete se llama libfuse2t64).
+        FUSE_PKG="libfuse2"
+        apt-cache show libfuse2t64 >/dev/null 2>&1 && FUSE_PKG="libfuse2t64"
+        sudo apt install -y vlc vlc-plugin-base libvlc5 xdotool ydotool wine "$FUSE_PKG"
     elif command -v pacman >/dev/null 2>&1; then
         # A diferencia de Fedora/Debian, Arch no separa un paquete de "solo plugins" - libvlc por
         # si solo (confirmado contra su propio depends: solo dbus/glibc/libgcc, sin plugins) no
         # alcanza; hace falta el paquete "vlc" completo, que es el que trae los plugins reales
         # (incluido el decoder H.264, ya compilado adentro del mismo paquete en Arch).
-        sudo pacman -S --needed --noconfirm vlc xdotool ydotool wine
+        sudo pacman -S --needed --noconfirm vlc xdotool ydotool wine fuse2
     else
-        echo "No reconozco tu gestor de paquetes. Instala manualmente: vlc (paquete completo, no solo la libreria), xdotool, ydotool y wine."
+        echo "No reconozco tu gestor de paquetes. Instala manualmente: vlc (paquete completo, no solo la libreria), xdotool, ydotool, wine y libfuse2."
         exit 1
     fi
 }
@@ -55,6 +80,8 @@ ldconfig -p 2>/dev/null | grep -q "libvlc\.so" || missing+=("vlc-libs")
 # de fondo), no solo "algun" archivo en la carpeta de plugins - asi una instalacion parcial
 # vieja tambien se detecta como incompleta en vez de leerse como "ya esta todo instalado".
 find /usr/lib* -ipath "*/vlc/plugins/*avcodec*" 2>/dev/null | grep -q . || missing+=("vlc-plugins")
+# El AppImage se monta con FUSE 2.
+ldconfig -p 2>/dev/null | grep -q "libfuse\.so\.2" || missing+=("libfuse2")
 
 if [ ${#missing[@]} -gt 0 ]; then
     echo "Faltan: ${missing[*]}"
@@ -115,18 +142,47 @@ if [ "$NEEDS_RELOGIN" -eq 1 ]; then
     echo "funcione. El resto de la instalacion sigue igual mientras tanto."
 fi
 
+echo "Buscando la ultima version del launcher para Linux..."
+RELEASES_JSON="$(curl -fsSL "https://api.github.com/repos/${REPO}/releases?per_page=30")" || {
+    echo "No se pudo consultar GitHub (sin conexion o limite de consultas). Volve a intentar en un rato."
+    exit 1
+}
+# El repo de releases tambien guarda las versiones de Windows (tags como "1.0.7"): las de Linux llevan
+# el prefijo "linux-". GitHub devuelve los releases del mas nuevo al mas viejo; se toma el primero.
+ASSET_URL="$(printf '%s' "$RELEASES_JSON" | grep -oE 'https://[^"]+/releases/download/linux-[^/"]+/[^/"]+\.AppImage' | head -1 || true)"
+if [ -z "$ASSET_URL" ]; then
+    echo "Todavia no hay una version del launcher para Linux publicada."
+    exit 1
+fi
+
 echo "Descargando el launcher..."
 mkdir -p "$INSTALL_DIR"
-curl -sL "$ASSET_URL" -o "$INSTALL_DIR/launcher.tar.gz"
+TMP_FILE="$(mktemp "$INSTALL_DIR/.launcher.XXXXXX")"
+trap 'rm -f "$TMP_FILE"' EXIT
+curl -fL --progress-bar -o "$TMP_FILE" "$ASSET_URL"
+chmod +x "$TMP_FILE"
+# Se reemplaza recien al terminar de bajar, asi un corte a la mitad no deja un launcher roto (y si ya
+# estaba abierto, sigue andando: mv cambia el archivo, no el que esta corriendo).
+mv -f "$TMP_FILE" "$APPIMAGE_PATH"
+trap - EXIT
 
-echo "Descomprimiendo en $INSTALL_DIR..."
-tar -xzf "$INSTALL_DIR/launcher.tar.gz" -C "$INSTALL_DIR"
-rm -f "$INSTALL_DIR/launcher.tar.gz"
+echo "Agregando el launcher al menu de aplicaciones..."
+if ! "$APPIMAGE_PATH" --install-desktop-entry; then
+    # Si FUSE todavia no esta disponible en esta sesion, el AppImage puede correr extrayendose solo.
+    APPIMAGE_EXTRACT_AND_RUN=1 "$APPIMAGE_PATH" --install-desktop-entry \
+        || echo "No se pudo crear la entrada del menu. El launcher igual se abre con: $APPIMAGE_PATH"
+fi
 
-# La tar no siempre preserva el bit de ejecutable (se empaqueto desde Windows) - lo forzamos.
-chmod +x "$INSTALL_DIR/WowLauncher"
+if [ -x "$LEGACY_DIR/WowLauncher" ]; then
+    echo ""
+    echo "Nota: tenes una instalacion anterior en $LEGACY_DIR. Esa version no se actualiza sola;"
+    echo "podes borrar esa carpeta cuando quieras (tus datos y el juego no estan ahi)."
+fi
 
 echo ""
 echo "== Listo =="
-echo "Para abrir el launcher:"
-echo "  $INSTALL_DIR/WowLauncher"
+echo "Buscalo como \"WoW Patagonia Launcher\" en el menu de aplicaciones, o abrilo con:"
+echo "  $APPIMAGE_PATH"
+# Con "curl | bash" $0 vale "bash", asi que el comando para quitarlo se arma con la URL, no con $0.
+echo "Se actualiza solo desde adentro del launcher. Para quitarlo:"
+echo "  curl -sL $SCRIPT_URL | bash -s -- --uninstall"
