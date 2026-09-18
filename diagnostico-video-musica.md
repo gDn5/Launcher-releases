@@ -1,6 +1,35 @@
 # Diagnóstico: video/música no funcionan en Linux
 
-## Próximos pasos (ronda 2 - post fix de vlc-plugins-base + ydotool)
+## Ronda 3 - video con codec H.264 + wineserver -w + diagnóstico de ydotool
+
+Con la música andando (¡bien!) pero el video no y el auto-login sin funcionar tras el relogin,
+esto es lo que cambié y lo que necesito para el tema pendiente de ydotool:
+
+- **Video**: confirmado que faltaba el decoder H.264 específicamente (paquete separado de
+  `vlc-plugins-base` en Fedora, por licenciamiento). El script ahora instala `vlc-plugins-all`.
+- **Launcher que no cierra / música sonando con el juego abierto**: era un bug real de cómo
+  Wine maneja los procesos - el launcher esperaba a que termine el proceso "wine" en sí, pero
+  ese proceso puede cerrarse antes que el juego real. Arreglado (`wineserver -w`).
+- **ydotool sigue sin funcionar pese al relogin**: necesito ver qué está pasando ahí. Corré esto
+  después de actualizar con el script y pegame el resultado completo:
+
+```bash
+id -nG
+systemctl --user status ydotool
+ls -la /dev/uinput
+ydotool type "test"
+echo "exit code: $?"
+```
+
+Actualizá primero con:
+
+```bash
+curl -sL https://raw.githubusercontent.com/gDn5/Launcher-releases/main/install-native-linux.sh | bash
+```
+
+---
+
+## Ronda 2 (post fix de vlc-plugins-base + ydotool)
 
 El log de abajo (ronda 1) confirmó que `libvlc.so` carga bien pero `libvlc_new()` falla en el
 lado nativo - consistente con que falten los plugins reales de VLC (`vlc-plugins-base`), no solo
